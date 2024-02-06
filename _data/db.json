@@ -1,0 +1,124 @@
+{
+  "recipes": [
+    {
+      "id": "1",
+      "title": "Veggie Carbonara",
+      "image": "veggie_carbonara.jpg",
+      "time": 20,
+      "description": "A vegetarian twist on the classic Italian pasta dish with eggs, cheese, and vegetarian bacon.",
+      "vegan": false
+    },
+    {
+      "id": "2",
+      "title": "Veg Stir-Fry",
+      "image": "veg_stir_fry.jpg",
+      "time": 25,
+      "description": "A quick and healthy vegetarian stir-fry with fresh vegetables and tofu.",
+      "vegan": true
+    },
+    {
+      "id": "3",
+      "title": "Mushroom Risotto",
+      "image": "mushroom_risotto.jpg",
+      "time": 40,
+      "description": "Creamy risotto made with Arborio rice, mushrooms, and Parmesan cheese.",
+      "vegan": false
+    },
+    {
+      "id": "4",
+      "title": "Quinoa Salad",
+      "image": "quinoa_salad.jpg",
+      "time": 15,
+      "description": "A refreshing salad made with quinoa, mixed greens, vegetables, and a zesty dressing.",
+      "vegan": true
+    },
+    {
+      "id": "5",
+      "title": "Butternut Squash Soup",
+      "image": "butternut_squash_soup.jpg",
+      "time": 35,
+      "description": "A comforting soup made with roasted butternut squash, onions, and spices.",
+      "vegan": true
+    },
+    {
+      "id": "6",
+      "title": "Eggplant Parmesan",
+      "image": "eggplant_parmesan.jpg",
+      "time": 45,
+      "description": "Layers of breaded and baked eggplant slices topped with marinara sauce and melted cheese.",
+      "vegan": false
+    },
+    {
+      "id": "7",
+      "title": "Caprese Salad",
+      "image": "caprese_salad.jpg",
+      "time": 10,
+      "description": "A simple and elegant salad made with fresh tomatoes, mozzarella cheese, and basil.",
+      "vegan": false
+    },
+    {
+      "id": "8",
+      "title": "Lentil Soup",
+      "image": "lentil_soup.jpg",
+      "time": 30,
+      "description": "Hearty soup made with lentils, carrots, celery, and flavorful spices.",
+      "vegan": true
+    },
+    {
+      "id": "9",
+      "title": "Vegetable Lasagna",
+      "image": "vegetable_lasagna.jpg",
+      "time": 50,
+      "description": "Layers of lasagna noodles, ricotta cheese, marinara sauce, and assorted vegetables.",
+      "vegan": false
+    },
+    {
+      "id": "10",
+      "title": "Chickpea Salad Sandwich",
+      "image": "chickpea_salad_sandwich.jpg",
+      "time": 15,
+      "description": "A delicious sandwich filling made with mashed chickpeas, celery, onions, and spices.",
+      "vegan": true
+    },
+    {
+      "id": "11",
+      "title": "Ratatouille",
+      "image": "ratatouille.jpg",
+      "time": 40,
+      "description": "A classic French Provencal stewed vegetable dish with tomatoes, eggplant, zucchini, and bell peppers.",
+      "vegan": true
+    },
+    {
+      "id": "12",
+      "title": "Vegetarian Chili",
+      "image": "vegetarian_chili.jpg",
+      "time": 35,
+      "description": "A hearty chili made with beans, tomatoes, peppers, and spices.",
+      "vegan": true
+    },
+    {
+      "id": "13",
+      "title": "Spinach and Feta Pie",
+      "image": "spinach_feta_pie.jpg",
+      "time": 50,
+      "description": "Flaky phyllo pastry filled with spinach, feta cheese, onions, and herbs.",
+      "vegan": false
+    },
+    {
+      "id": "14",
+      "title": "Cauliflower Fried Rice",
+      "image": "cauliflower_fried_rice.jpg",
+      "time": 25,
+      "description": "A healthy twist on traditional fried rice made with cauliflower rice, vegetables, and soy sauce.",
+      "vegan": true
+    },
+    {
+      "id": "15",
+      "title": "Spicy Chickpea Curry",
+      "image": "spicy_chickpea_curry.jpg",
+      "time": 30,
+      "description": "A flavorful chickpea curry with aromatic spices and coconut milk.",
+      "vegan": true
+    }
+  ]
+}
