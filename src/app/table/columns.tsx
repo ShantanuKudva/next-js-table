@@ -27,7 +27,7 @@ import {
 import { DataTableColumnHeader } from "./dataTableColumnHeader";
 
 export type Recipe = {
-  id: string;
+  _id: string;
   title: string;
   image: string;
   time: number;
@@ -91,13 +91,24 @@ export const columns = [
       return <RecipeActions data={data} />;
     },
   },
+  {
+    id: "delete",
+    cell: ({ row }) => (
+      <Button onClick={() => deleteRow(row.original)}>Delete</Button>
+    ),
+  },
 ];
+
+function deleteRow(data) {
+  console.log(data);
+  return;
+}
 
 const RecipeActions: React.FC<{ data: RecipeData }> = ({ data }) => {
   const [isCardVisible, setCardVisibility] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [description, setDescription] = useState(data.description);
-
+  const [title, setTitle] = useState(data.title);
   const handleClick = () => {
     setCardVisibility(true);
   };
@@ -120,6 +131,32 @@ const RecipeActions: React.FC<{ data: RecipeData }> = ({ data }) => {
     setDescription(data.description);
     setIsEditing(false);
   };
+  const saveChangesToDatabase = async (id) => {
+    console.log(id);
+    try {
+      const response = await fetch(`http://localhost:3000/api/recipes/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          newTitle: title,
+          newDescription: description,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update recipe");
+      }
+
+      const responseData = await response.json();
+      console.log(responseData); // Handle response data if necessary
+    } catch (error) {
+      console.error("Error updating recipe:", error);
+    }
+    setIsEditing(false);
+    window.location.reload();
+  };
 
   return (
     <>
@@ -135,8 +172,26 @@ const RecipeActions: React.FC<{ data: RecipeData }> = ({ data }) => {
             }`}
           >
             <Card>
+              {(data.title != title || data.description != description) &&
+                !isEditing && (
+                  <Button
+                    className="m-4"
+                    onClick={() => saveChangesToDatabase(data._id)}
+                  >
+                    Save Changes to Database
+                  </Button>
+                )}
               <CardHeader>
-                <CardTitle className="text-3xl">{data.title}</CardTitle>
+                {isEditing ? (
+                  <Textarea
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className=""
+                  />
+                ) : (
+                  <CardTitle className="text-3xl">{title}</CardTitle>
+                )}
+
                 <div className="">
                   {isEditing ? (
                     <div className="flex justify-start gap-4 mt-2">
@@ -178,83 +233,3 @@ const RecipeActions: React.FC<{ data: RecipeData }> = ({ data }) => {
     </>
   );
 };
-// export const columns = [
-//   {
-//     id: "select",
-//     header: ({ table }) => (
-//       <Checkbox
-//         checked={
-//           table.getIsAllPageRowsSelected() ||
-//           (table.getIsSomePageRowsSelected() && "indeterminate")
-//         }
-//         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-//         aria-label="Select all"
-//       />
-//     ),
-//     cell: ({ row }) => (
-//       <Checkbox
-//         checked={row.getIsSelected()}
-//         onCheckedChange={(value) => row.toggleSelected(!!value)}
-//         aria-label="Select row"
-//       />
-//     ),
-//     enableSorting: false,
-//     enableHiding: false,
-//   },
-//   {
-//     accessorKey: "title",
-//     header: ({ column }) => {
-//       return (
-//         <Button
-//           variant="ghost"
-//           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-//         >
-//           Title
-//           <ArrowUpDown className="ml-2 h-4 w-4" />
-//         </Button>
-//       );
-//     },
-//   },
-//   {
-//     accessorKey: "time",
-//     header: ({ column }) => {
-//       return (
-//         <Button
-//           variant="ghost"
-//           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-//         >
-//           Time Taken
-//           <ArrowUpDown className="ml-2 h-4 w-4" />
-//         </Button>
-//       );
-//     },
-//   },
-//   { accessorKey: "description", header: "Description" },
-//   {
-//     id: "actions",
-//     cell: ({ row }) => {
-//       const data = row.original;
-//       const description = data.description;
-//       return (
-//         <DropdownMenu>
-//           <DropdownMenuTrigger>
-//             <Button variant="ghost" className="w-8 h-8 p-0">
-//               <MoreHorizontal className="h-4 w-4" />
-//             </Button>
-//           </DropdownMenuTrigger>
-//           <DropdownMenuContent>
-//             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-//             <DropdownMenuItem
-//               onClick={() => {
-//                 navigator.clipboard.writeText(description);
-//                 alert("Description copied successfully");
-//               }}
-//             >
-//               Copy description
-//             </DropdownMenuItem>
-//           </DropdownMenuContent>
-//         </DropdownMenu>
-//       );
-//     },
-//   },
-// ];
