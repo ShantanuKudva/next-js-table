@@ -29,7 +29,7 @@ import { saveAs } from "file-saver";
 import { FileTextIcon } from "@radix-ui/react-icons";
 import { DataTableViewOptions } from "./columnVisibility";
 import { DataTableColumnHeader } from "./dataTableColumnHeader";
-
+import AddRecipe from "@/components/addRecipe";
 // interface Recipe {
 //   id: string;
 //   title: string;
@@ -115,6 +115,7 @@ function DataTable<TData, TValue>({
           <div className="flex items-stretch justify-center m-auto gap-2">
             <ModeToggle />
             <DataTableViewOptions table={table} />
+            <AddRecipe />
           </div>
         </div>
         {originalRowData.length > 0 && (

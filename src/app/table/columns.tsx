@@ -1,9 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Pencil1Icon, EyeOpenIcon, SlashIcon } from "@radix-ui/react-icons";
 // import {
@@ -93,24 +94,20 @@ export const columns = [
   },
   {
     id: "delete",
-    cell: ({ row }) => (
-      <Button onClick={() => deleteRow(row.original)}>Delete</Button>
-    ),
+    cell: ({ row }) => <DeleteButton id={row.original._id} />,
   },
 ];
 
-function deleteRow(data) {
-  console.log(data);
-  return;
-}
-
 const RecipeActions: React.FC<{ data: RecipeData }> = ({ data }) => {
+  const router = useRouter();
   const [isCardVisible, setCardVisibility] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [description, setDescription] = useState(data.description);
   const [title, setTitle] = useState(data.title);
   const handleClick = () => {
     setCardVisibility(true);
+    setTitle(data.title);
+    setDescription(data.description);
   };
 
   const handleClose = () => {
@@ -131,6 +128,15 @@ const RecipeActions: React.FC<{ data: RecipeData }> = ({ data }) => {
     setDescription(data.description);
     setIsEditing(false);
   };
+
+  useEffect(() => {
+    return () => {
+      setIsEditing(false);
+      setDescription(data.description);
+      setTitle(data.title);
+    };
+  }, [data.description, data.title]);
+
   const saveChangesToDatabase = async (id) => {
     console.log(id);
     try {
@@ -155,7 +161,9 @@ const RecipeActions: React.FC<{ data: RecipeData }> = ({ data }) => {
       console.error("Error updating recipe:", error);
     }
     setIsEditing(false);
-    window.location.reload();
+    setCardVisibility(false);
+
+    router.refresh();
   };
 
   return (
@@ -232,4 +240,36 @@ const RecipeActions: React.FC<{ data: RecipeData }> = ({ data }) => {
       </Button>
     </>
   );
+};
+
+const DeleteButton = ({ id }) => {
+  const router = useRouter();
+
+  const handleDelete = async () => {
+    const confirmed = confirm("Are you sure you want to delete this recipe?");
+
+    if (confirmed) {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/recipes/?id=${id}`,
+          {
+            method: "DELETE",
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to delete recipe");
+        }
+
+        console.log("Recipe deleted successfully");
+        router.refresh();
+      } catch (error) {
+        console.error("Error deleting recipe:", error);
+      } finally {
+        router.refresh();
+      }
+    }
+  };
+
+  return <Button onClick={handleDelete}>Delete</Button>;
 };
